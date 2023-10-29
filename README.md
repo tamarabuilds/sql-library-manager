@@ -20,6 +20,7 @@ Tech used: HTML, CSS, JavaScript, Node.js, Express, Pug, SQLite, and the SQL ORM
 ## Lessons Learned
 
 Picked up a bunch of skills including:
+ * Setting up an express server
  * Adding true data persistence to projects.
  * How to implement, modify, interact, and maintain a local custom SQLite database.
  * 
