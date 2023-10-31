@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 // Importing the Book model
-const { Book } = require('../models')
+// const { Book } = require('../models') // For testing
 
 /**
  * Handler function to wrap each route with. Reduces try.. catch blocks.
@@ -19,14 +19,13 @@ function asyncHandler(cb){
   }
 }
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   // res.render('index', { title: 'Express' });     // Inititally generated. Can delete.
-// });
-
+  /* GET home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
-  const books = await Book.findAll();
-  res.json(books);
+  res.redirect('/books')
+
+  // // For initial testing
+  // const books = await Book.findAll();
+  // res.json(books);
 }));
 
 module.exports = router;

@@ -22,14 +22,8 @@ const db = require('./models');    // Accessing all Sequelizes methods and funct
 })();
 
 
-
-
-
-
-
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const routes = require('./routes/index');
+const books = require('./routes/books');
 
 const app = express();
 
@@ -47,8 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/static', express.static('public'));
 
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', routes);
+app.use('/books', books);
 
 
 
@@ -58,23 +52,43 @@ app.use(function(req, res, next) {
   console.log('404 error handler called');
   const error = new Error();
   error.status = 404;
-  err.message = `Darn! You just hit a 404 error because this page doesn't exist.`
-  console.log(error);
-  // next(createError(404));  // automatically generated
-
-  // NEED TO RENDER THE PAGE-NOT-FOUND and pass the {error} object !!!!!!!!!!!!!!!
+  error.message = `Sorry! We couldn't find the page you were looking for.`
+  // next(createError(404));  // automatically generated. What is createError()
+  // Send the 404 error to the global error handler
   next(error);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function(error, req, res, next) {
+  // Commenting out what was automatically generated, but is it a better practice????
+  // // set locals, only providing error in development
+  // res.locals.message = err.message;
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+  // confirm there's an error
+  if (error){
+    console.log(`Global error handler called`);
+    // console.log(error);
+  }
+  // check for 404 err, if so render page-not-found
+  if (error.status === 404){
+    res.status(404);
+    // If sendStatus(404), making sure the error message is also updated ??????
+    error.message = `Sorry! We couldn't find the page you were looking for.`
+    res.render('page-not-found', { error })
+  } else {
+    // render the error page
+    error.message = error.message || 'Sorry! There was an unexpected error on the server.';
+    res.status(error.status || 500);
+    console.log(`Error status: ${error.status}`)
+    console.log(`Error message: ${error.message}`)
+    console.log(error)
+    res.render('error', { error });
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  }
+
+
+
 });
 
 module.exports = app;
