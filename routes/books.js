@@ -26,30 +26,31 @@ router.get("/error", (req, res, next) => {
 /* GET full list of books */
 router.get('/', asyncHandler(async (req, res) => {
     console.log(`GET full list of books - start`)
-    let search = "";
+    // let search = document.querySelector('#search-input');
+    console.log(`req.query.search: ${req.query.search}`)
+    const query = req.query.search || "";
     const books = await Book.findAll({
-        // order: [[ "year", "DESC"]]
         where: {
             [Op.or]: [
                 {
                     title: {
                         // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
-                        [Op.like]: `%${search}%`
+                        [Op.like]: `%${query}%`
                     }
                 },
                 {
                     author: {
-                        [Op.like]: `%${search}%`
+                        [Op.like]: `%${query}%`
                     }
                 },
                 {
                     genre: {
-                        [Op.like]: `%${search}%`
+                        [Op.like]: `%${query}%`
                     }
                 },
                 {
                     year: {
-                        [Op.like]: `%${search}%`
+                        [Op.like]: `%${query}%`
                     }
                 },
             ]
