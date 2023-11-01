@@ -1,16 +1,59 @@
-/* body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+	box-sizing: border-box;
 }
 
-a {
-  color: #00B7FF;
-} */
 
 body {
   padding: 10px 50px 50px;
-  font: 18px "Garamond", serif;
+  font-family: 'Lexend', sans-serif;
+  /* font: 18px "Garamond", serif; */
+  background-color: rgb(242,242,242);
+  background-image: url("../images/books.jpg");
+  /* Photo by <a href="https://unsplash.com/@olia?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Olia 💙💛 Gozha</a> on <a href="https://unsplash.com/photos/white-book-marker-on-book-page-J4kK8b9Fgj8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> */
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
+
+.flex-container {
+  display: flex;
+}
+
+
+/* SEARCH */
+
+.search-input {
+  /* padding: 0.4rem 1rem; */
+  border: 1px solid rgba(200, 200, 200, 0.9);
+  border-radius: 0.25rem 0 0 0.25rem ;
+  max-width: 30rem;
+  transition: .4s ease-out;
+  padding: 10px 14px 12px;
+  margin-left: 20rem;
+}
+
+.search-input:active, .search-input:hover, .search-input:focus {
+  border: 1px solid rgba(50, 50, 50, 0.9);
+}
+
+.search-submit {
+  cursor: pointer;
+  padding: 10px 14px 12px;
+  background: rgba(245, 245, 245, 0.9);
+  border-radius: 0 0.25rem 0.25rem 0;
+  border: 1px solid rgba(200, 200, 200, 0.9);
+  transition: .4s ease-out;
+}
+
+.search-submit:active, .search-submit:hover, .search-submit:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(50, 50, 50, 0.9);
+}
+
+
+
+
+
 
 a {
   color: #019875;
@@ -26,7 +69,7 @@ a {
 a.button, input[type=submit] {
   color: white;
   background: #019875;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font-family: "Lucida Grande", Helvetica, Arial, sans-serif; */
   padding: 10px 14px 12px;
   font-size: 14px;
   border-radius: 2px;
@@ -34,7 +77,8 @@ a.button, input[type=submit] {
 }
 
 form a.button, input[type=submit] {
-  margin-left: 140px;
+  /* margin-left: 140px; */
+  margin-left: 10px;
   transition: 0.4s;
 }
 
@@ -89,7 +133,7 @@ label {
 
 input {
   padding: 10px;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* font-family: "Lucida Grande", Helvetica, Arial, sans-serif; */
   font-size: 14px;
   border-radius: 2px;
   border-color: #E7E7E7;
@@ -104,3 +148,6 @@ input[type=text] {
 .error {
   color: rgb(236, 15, 15);
 }
+
+
+

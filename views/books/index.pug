@@ -1,10 +1,15 @@
 extends ../layout
 
 block content 
+    
     div 
         h1 Books
-        p
+        div.flex-container
             a.button(href='/books/new') Create New Book 
+            form(action='#', method='get')
+                input#search-input.search-input(type='search', placeholder='Search...')
+                input#search-submit.search-submit(type='submit', value="search")
+        br
 
     table
         thead

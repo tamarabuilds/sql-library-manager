@@ -37,8 +37,7 @@ Picked up a bunch of skills including:
 * Structure, style and CSS were updated:
   * Updated font to Lexend to improve readability. Learn more: https://www.lexend.com/
   * A custom logo favicon was added as a little star.
-  * ---Background color for the sidebar was updated.
-  * ---All image and button borders are rounded off.
+  * Background image was update with no repeating and responds to page size changes.
 
 
 ## Contributing

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
+const { Op } = require("sequelize");
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb){
@@ -25,8 +26,34 @@ router.get("/error", (req, res, next) => {
 /* GET full list of books */
 router.get('/', asyncHandler(async (req, res) => {
     console.log(`GET full list of books - start`)
+    let search = "";
     const books = await Book.findAll({
-        order: [[ "year", "DESC"]]
+        // order: [[ "year", "DESC"]]
+        where: {
+            [Op.or]: [
+                {
+                    title: {
+                        // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    author: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    genre: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    year: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+            ]
+        }
     });
     res.render("books/index", { books, title: "Books"});
 }));
@@ -47,7 +74,11 @@ router.post('/', asyncHandler(async (req, res) => {
         // redirect back to the full book list
         res.redirect("/books");
     } catch (error) {
+        console.log(error)
+        console.log(`error.name  is ${error.name}`)
         if (error.name === "SequelizeValidationError"){   // checking the error type
+            console.log(`we have the right error`)
+            console.log(error.errors)
             book = await Book.build(req.body);
             res.render("books/new", { book, errors: error.errors, title: "New Book" })
           } else {
@@ -90,9 +121,14 @@ router.post('/:id', asyncHandler(async (req, res) => {
         }
     } catch (error) {
         if (error.name === "SequelizeValidationError") {        // checking the error
+            console.log(`we have the right error`)
+            console.log(error.errors)
             book = await Book.build(req.body);
-            book.id = req.params.id; // make sure correct article gets updated
-            res.render("books/" + book.id, { article, errors: error.errors, title: "Update Book" })
+            console.log(book)
+            console.log(`book.id: ${book.id}`)
+            console.log(`req.params.id: ${req.params.id}`)
+            book.id = req.params.id; // make sure correct book gets updated
+            res.render("books/update", { book, errors: error.errors, title: "Update Book" })
         } else {
             throw error;    // error caught in the asyncHandler's catch block
         };
