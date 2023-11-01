@@ -31,9 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     genre: DataTypes.STRING,
     year: DataTypes.INTEGER
-  }, {});
-  Book.associate = function(models) {
-    // associations can be defined here
-  };
+  }, { });      // DO WE NEED TO PASS SEQUELIZE as the second parameter? seems to work ok without it...
+
+
+  // Book.associate = function(models) {
+  //   // associations can be defined here
+  // };
   return Book;
 };
