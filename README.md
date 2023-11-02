@@ -3,6 +3,7 @@ Learn more about the developer on <a href="https://www.linkedin.com/in/tamarabui
 
 Unit 08 project for the Full Stack JavaScript Techdegree. This is a web app to list, add, update and delete books to manage a fictional library with a SQLite database.
 
+![Screenshot 2023-11-02 at 10 00 17 AM](https://github.com/tamarabuilds/sql-library-manager/assets/98510821/67ce339c-7eea-494d-a430-ac80fcb0caa9)
 
 
 ## How It's Made
