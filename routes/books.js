@@ -28,7 +28,38 @@ router.get("/error", (req, res, next) => {
 router.get('/', asyncHandler(async (req, res) => {
     console.log(`GET full list of books - start`)
     console.log(`req.query.search: ${req.query.search}`)
+    console.log(`req.query.page: ${req.query.page}`)
     const search = req.query.search || "";
+    const pageNum = req.query.page || 1;
+    const booksAll = await Book.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    title: {
+                        // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    author: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    genre: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+                {
+                    year: {
+                        [Op.like]: `%${search}%`
+                    }
+                },
+            ]
+        },
+    }   
+    );
+
     const books = await Book.findAll({
         where: {
             [Op.or]: [
@@ -54,14 +85,18 @@ router.get('/', asyncHandler(async (req, res) => {
                     }
                 },
             ]
-        }
-    });
+        },
+        offset: ITEMS_PER_PAGE * (pageNum-1), limit: ITEMS_PER_PAGE
+    }   
+    );
+    
+
 
     // Pagination
-    const numberOfPages = Math.ceil(books.length / ITEMS_PER_PAGE);
+    const numberOfPages = Math.ceil(booksAll.length / ITEMS_PER_PAGE);
     console.log(`numberOfPages: ${numberOfPages}`);
     console.log(numberOfPages)
-    res.render("books/index", { books, numberOfPages, title: "Books" });
+    res.render("books/index", { books, numberOfPages, pageNum, title: "Books" });
 }));
 
 /* Create a new book form */

@@ -20,6 +20,7 @@ body {
 }
 
 
+
 /* SEARCH */
 
 .search-input {
@@ -150,4 +151,34 @@ input[type=text] {
 }
 
 
+.pagination {
+  /* margin: 0 auto; */
+  margin: 30px 0 60px;
+  text-align: center;
+}
 
+
+.pagination li {
+  display: inline;
+  padding: 0 3px;
+}
+
+.pagination li button {
+  font-size: 1em;
+  cursor: pointer;
+	outline: none;
+	padding: 0.5em 0.85em;
+	background: #019875;
+  border: none;
+  border-radius: 3px;
+  text-decoration: none;
+	color: #fff;
+	box-shadow: 0 1px 8px 0 rgba(22, 42, 90, 0.05);
+	transition: 0.4s;
+}
+
+.pagination li button.active, .pagination li button:hover {
+  background-color: #fff;
+  color: #019875;
+  border: 2px solid #019875;
+}
