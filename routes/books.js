@@ -32,79 +32,31 @@ router.get("/error", (req, res, next) => {
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    // console.log(`GET full list of books - start`)
-    // console.log(`req.query.search: ${req.query.search}`)
-    // console.log(`req.query.page: ${req.query.page}`)
     const search = req.query.search || "";
     const pageNum = req.query.page || 1;
-    const booksAll = await Book.findAll({
+    let books = await Book.findAll({
       where: {
         [Op.or]: [
-          {
-            title: {
-              // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            author: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            genre: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            year: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-        ],
-      },
-    });
-
-    const books = await Book.findAll({
-      where: {
-        [Op.or]: [
-          {
-            title: {
-              // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            author: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            genre: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-          {
-            year: {
-              [Op.like]: `%${search}%`,
-            },
-          },
-        ],
-      },
-      offset: ITEMS_PER_PAGE * (pageNum - 1),
-      limit: ITEMS_PER_PAGE,
+          // like is case insensitive in sqlite by default: https://sqlite.org/faq.html#q18
+          { title: { [Op.like]: `%${search}%` } },
+          { author: { [Op.like]: `%${search}%` } },
+          { genre: { [Op.like]: `%${search}%` } },
+          { year: { [Op.like]: `%${search}%` } },
+        ]
+      }
     });
 
     // Pagination
-    const numberOfPages = Math.ceil(booksAll.length / ITEMS_PER_PAGE);
-    // console.log(`numberOfPages: ${numberOfPages}`);
-    // console.log(numberOfPages)
-    res.render("books/index", {
-      books,
-      numberOfPages,
-      pageNum,
-      title: "Books",
-    });
+    const numberOfPages = Math.ceil(books.length / ITEMS_PER_PAGE);
+
+    // If a page is selected, only return the slice of books for that number of items per page.
+    req.query.page
+      ? (books = books.slice(
+          ((req.query.page * ITEMS_PER_PAGE) - ITEMS_PER_PAGE), (req.query.page * ITEMS_PER_PAGE)
+      ))
+      : (books = books.slice(0, ITEMS_PER_PAGE))
+
+    res.render("books/index", { books, numberOfPages, pageNum, title: "Books" });
   })
 );
 
@@ -127,11 +79,7 @@ router.post(
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         book = await Book.build(req.body);
-        res.render("books/new-book", {
-          book,
-          errors: error.errors,
-          title: "New Book",
-        });
+        res.render("books/new-book", { book, errors: error.errors, title: "New Book" });
       } else {
         throw error;
       }
@@ -176,11 +124,7 @@ router.post(
         // checking the error
         book = await Book.build(req.body);
         book.id = req.params.id; // make sure correct book gets updated
-        res.render("books/update-book", {
-          book,
-          errors: error.errors,
-          title: "Update Book",
-        });
+        res.render("books/update-book", { book, errors: error.errors, title: "Update Book" });
       } else {
         throw error; // error caught in the asyncHandler's catch block
       }

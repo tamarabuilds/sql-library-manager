@@ -35,8 +35,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // This was generated automatically and should serve static files
 app.use(express.static(path.join(__dirname, "public")));
-// OR do I need to unclude this:
-// app.use('/static', express.static('public'));
 
 app.use("/", routes);
 app.use("/books", books);
@@ -61,8 +59,7 @@ app.use(function (error, req, res, next) {
   if (error.status === 404) {
     res.status(404);
     error.message = `Sorry! We couldn't find the page you were looking for.`;
-    error.title = "Page Not Found";
-    res.render("page-not-found", { error });
+    res.render("page-not-found", { error, title: 'Page Not Found' });
   } else {
     // render the error page
     error.message =
@@ -71,8 +68,7 @@ app.use(function (error, req, res, next) {
     console.log(`Error status: ${error.status}`);
     console.log(`Error message: ${error.message}`);
     console.log(error);
-    error.title = "Server Error";
-    res.render("error", { error });
+    res.render("error", { error, title: 'Server Error' });
   }
 });
 

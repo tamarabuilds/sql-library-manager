@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       year: DataTypes.INTEGER,
     },
     {}
-  ); // DO WE NEED TO PASS SEQUELIZE as the second parameter? seems to work ok without it...
+  ); 
 
   return Book;
 };

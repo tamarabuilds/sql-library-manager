@@ -20,6 +20,7 @@ Install my-project with npm
 ## Optimizations
 
  * Made sure all errors route to the Global Error Handler.
+ * Enabled Server testing with navigating to /books/error.
  * Logic is centrally located in the books route.
  * When no search results are found, a friendly message appears with a link back home.
  * Clean UI accounting for large screens.
