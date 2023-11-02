@@ -126,7 +126,6 @@ router.post(
       res.redirect("/books");
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
-        // checking the error type
         book = await Book.build(req.body);
         res.render("books/new-book", {
           book,
