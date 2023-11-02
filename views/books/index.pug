@@ -7,7 +7,7 @@ block content
         div.flex-container
             a.button(href='/books/new-book') Create New Book 
             form(action='#', method='get')
-                input.search-input(type='search', name='search', placeholder='Search...')
+                input.search-input(type='search', name='search', placeholder='Search...', value=search)
                 input.search-submit(type='submit', value="search")
         br
 
@@ -37,6 +37,8 @@ block content
         div.pagination
             ul.flex-container 
                 form(method="get" action=`/books`)
+                    if search
+                        input(type="hidden" name="search" value=search)
                     each _, i in Array(numberOfPages)
                         li
                             if i+1 == pageNum

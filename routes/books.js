@@ -34,6 +34,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const search = req.query.search || "";
     const pageNum = req.query.page || 1;
+    console.log(req.query.page)
     let books = await Book.findAll({
       where: {
         [Op.or]: [
@@ -56,7 +57,7 @@ router.get(
       ))
       : (books = books.slice(0, ITEMS_PER_PAGE))
 
-    res.render("books/index", { books, numberOfPages, pageNum, title: "Books" });
+    res.render("books/index", { books, numberOfPages, pageNum, search, title: "Books" });
   })
 );
 

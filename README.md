@@ -24,6 +24,9 @@ Install my-project with npm
  * Logic is centrally located in the books route.
  * When no search results are found, a friendly message appears with a link back home.
  * Clean UI accounting for large screens.
+ * Search query persist in the search form.
+ * Pagination works with a large search query as well.
+ * New book form will maintain any entered values even if an error populates for missing title or author.
 
 
 ## Lessons Learned
