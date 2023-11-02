@@ -27,3 +27,7 @@ block content
                     td= book.genre
                     td= book.year
 
+    ul.flex-container 
+        each _, i in Array(numberOfPages)
+            li= i+1
+

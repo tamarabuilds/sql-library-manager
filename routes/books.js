@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
 const { Op } = require("sequelize");
+const ITEMS_PER_PAGE = 10;
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb){
@@ -55,7 +56,12 @@ router.get('/', asyncHandler(async (req, res) => {
             ]
         }
     });
-    res.render("books/index", { books, title: "Books"});
+
+    // Pagination
+    const numberOfPages = Math.ceil(books.length / ITEMS_PER_PAGE);
+    console.log(`numberOfPages: ${numberOfPages}`);
+    console.log(numberOfPages)
+    res.render("books/index", { books, numberOfPages, title: "Books" });
 }));
 
 /* Create a new book form */
