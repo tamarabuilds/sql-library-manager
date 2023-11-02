@@ -5,35 +5,42 @@ block content
     div 
         h1 Books
         div.flex-container
-            a.button(href='/books/new') Create New Book 
+            a.button(href='/books/new-book') Create New Book 
             form(action='#', method='get')
-                input#search-input.search-input(type='search', name='search', placeholder='Search...')
-                input#search-submit.search-submit(type='submit', value="search")
+                input.search-input(type='search', name='search', placeholder='Search...')
+                input.search-submit(type='submit', value="search")
         br
 
-    table
-        thead
-            tr
-                th Title
-                th Author
-                th Genre
-                th Year
-        tbody
-            each book in books 
-                tr
-                    td
-                        a(href="/books/" + book.id)= book.title
-                    td= book.author
-                    td= book.genre
-                    td= book.year
+    if books.length == 0
+        h3 Oh no! Looks there are no results. Please try another search.
+        br
+        p
+        a.button(href='/books') Home
+    else
 
-    div.pagination
-        ul.flex-container 
-            form(method="get" action=`/books`)
-                each _, i in Array(numberOfPages)
-                    li.flex-item
-                        if i+1 == pageNum
-                            button.active(type='submit' name='page' value=`${i+1}`)= i+1
-                        else
-                            button(type='submit' name='page' value=`${i+1}`)= i+1
+        table
+            thead
+                tr
+                    th Title
+                    th Author
+                    th Genre
+                    th Year
+            tbody
+                each book in books 
+                    tr
+                        td
+                            a(href="/books/" + book.id)= book.title
+                        td= book.author
+                        td= book.genre
+                        td= book.year
+
+        div.pagination
+            ul.flex-container 
+                form(method="get" action=`/books`)
+                    each _, i in Array(numberOfPages)
+                        li
+                            if i+1 == pageNum
+                                button.active(type='submit' name='page' value=`${i+1}`)= i+1
+                            else
+                                button(type='submit' name='page' value=`${i+1}`)= i+1
 

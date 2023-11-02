@@ -1,31 +1,38 @@
-'use strict';
+"use strict";
+/**
+ * Define a database model to be exported, with tables names, data types, and validation
+ *
+ * @param {promise-based ORM (object relational mapping) tool} sequelize
+ * @param {Define type of data for sequelize} DataTypes
+ * @returns Book named table to store data
+ */
 module.exports = (sequelize, DataTypes) => {
-  const Book = sequelize.define('Book', {
-    title: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          // custom error message
-          msg: 'Please provide a value for title'
+  const Book = sequelize.define(
+    "Book",
+    {
+      title: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            // custom error message
+            msg: "Please provide a value for title",
+          },
         },
       },
-    },
-    author: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          // custom error message
-          msg: 'Please provide a value for author'
+      author: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            // custom error message
+            msg: "Please provide a value for author",
+          },
         },
       },
+      genre: DataTypes.STRING,
+      year: DataTypes.INTEGER,
     },
-    genre: DataTypes.STRING,
-    year: DataTypes.INTEGER
-  }, { });      // DO WE NEED TO PASS SEQUELIZE as the second parameter? seems to work ok without it...
+    {}
+  ); // DO WE NEED TO PASS SEQUELIZE as the second parameter? seems to work ok without it...
 
-
-  // Book.associate = function(models) {
-  //   // associations can be defined here
-  // };
   return Book;
 };
