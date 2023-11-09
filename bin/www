@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('08-sql-library-manager:server');
 var http = require('http');
-const { sequelize } = require('../models');   // import Sequelize
 
 /**
  * Get port from environment and store in Express.
